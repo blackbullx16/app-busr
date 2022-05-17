@@ -7,7 +7,7 @@ services:
       - 8005:80
     volumes:
       - ./backends/app_core/:/code:rw
-    command: ["python", "manage.py","runserver","0:80"]
+    command: ["python", "manage.py","runserver","--settings","app_core.settings.dev","0:80"]
     depends_on:
       - database
       
