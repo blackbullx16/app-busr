@@ -1,0 +1,25 @@
+FROM python:3.10.4-alpine3.15
+
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+# 
+WORKDIR /code
+
+RUN apk upgrade && \
+    apk update
+# 
+COPY Pip* /code
+
+# 
+RUN pip install --no-cache-dir --upgrade  pipenv 
+
+
+RUN pipenv install --system --deploy
+
+# 
+VOLUME [ "/code" ]
+
+# 
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80" , "--reload"]

@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: ./backends/
+      dockerfile: dockerfile
+    ports:
+      - 8005:80
+    volumes:
+      - ./backends/app/:/code:rw
+    depends_on:
+      - database
+      
+  database:
+    image: "postgis/postgis:14-3.2-alpine"
+    restart: always
+    ports:
+      - 5431:5432
+    env_file:
+      - .env
