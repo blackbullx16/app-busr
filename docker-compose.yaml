@@ -6,7 +6,8 @@ services:
     ports:
       - 8005:80
     volumes:
-      - ./backends/app/:/code:rw
+      - ./backends/app_core/:/code:rw
+    command: ["python", "manage.py","runserver","0:80"]
     depends_on:
       - database
       
