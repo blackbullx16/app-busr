@@ -7,10 +7,20 @@ services:
       - 8005:80
     volumes:
       - ./backends/app_core/:/code:rw
-    command: ["python", "manage.py","runserver","--settings","app_core.settings.dev","0:80"]
+    command:
+      [
+        "python",
+        "manage.py",
+        "runserver",
+        "--settings",
+        "app_core.settings.dev",
+        "0:80"
+      ]
     depends_on:
       - database
-      
+    env_file:
+      - .env
+
   database:
     image: "postgis/postgis:14-3.2-alpine"
     restart: always
@@ -18,3 +28,5 @@ services:
       - 5431:5432
     env_file:
       - .env
+    volumes:
+      - "./database/pg:${PGDATA}:rw"
